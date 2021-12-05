@@ -1,0 +1,107 @@
+//Define the ring
+
+ring r = 2, (m0, m1, m2, m3, m4, m5, m6, m7, new_n559_, new_n561_, new_Multi4_ADD8_28__5_, new_n547_, new_n549_, new_Multi4_ADD8_28__4_, new_n545_, new_n557_, new_n535_, new_n537_, new_n541_, new_n543_, new_n553_, new_n555_, new_Multi4_x3_5_, new_Multi4_ADD8_19__5_, new_n533_, new_n442_, new_n444_, new_n529_, new_n531_, new_Multi4_x3_4_, new_Multi4_ADD8_19__4_, new_n430_, new_n432_, new_n517_, new_n519_, new_Multi4_x3_3_, new_Multi4_ADD8_19__3_, new_n428_, new_n418_, new_n420_, new_n424_, new_n426_, new_n440_, new_Multi4_x2_4_, new_n416_, new_n436_, new_n438_, new_n325_, new_n327_, new_n412_, new_n414_, new_Multi4_x2_3_, new_Multi4_ADD8_10__3_, new_n313_, new_n315_, new_n400_, new_n402_, new_Multi4_x2_2_, new_Multi4_ADD8_10__2_, new_n301_, new_n303_, new_n299_, new_n311_, new_n283_, new_n285_, new_n295_, new_n297_, new_n307_, new_n309_, new_Multi4_y0_1_, new_Multi4_y0_2_, new_Multi4_y0_3_, new_Multi4_y1_1_, new_Multi4_y1_2_, new_Multi4_y1_3_, new_Multi4_y1_4_, new_Multi4_y2_2_, new_Multi4_y2_3_, new_Multi4_y2_4_, new_Multi4_y2_5_, new_Multi4_y3_3_, new_Multi4_y3_4_, new_Multi4_y3_5_, new_Multi4_y3_6_, a0, a1, a2, a3, b0, b1, b2, b3), lp;
+
+//Define the gate polys
+
+poly f0 = m0 - b0*a0;
+poly f1 = new_Multi4_y0_1_ - b0*a1;
+poly f2 = new_Multi4_y0_2_ - b0*a2;
+poly f3 = new_Multi4_y0_3_ - b0*a3;
+poly f4 = new_Multi4_y1_1_ - b1*a0;
+poly f5 = new_Multi4_y1_2_ - b1*a1;
+poly f6 = new_Multi4_y1_3_ - b1*a2;
+poly f7 = new_Multi4_y1_4_ - b1*a3;
+poly f8 = new_Multi4_y2_2_ - b2*a0;
+poly f9 = new_Multi4_y2_3_ - b2*a1;
+poly f10 = new_Multi4_y2_4_ - b2*a2;
+poly f11 = new_Multi4_y2_5_ - b2*a3;
+poly f12 = new_Multi4_y3_3_ - b3*a0;
+poly f13 = new_Multi4_y3_4_ - b3*a1;
+poly f14 = new_Multi4_y3_5_ - b3*a2;
+poly f15 = new_Multi4_y3_6_ - b3*a3;
+poly f16 = new_n283_ - new_Multi4_y0_1_*new_Multi4_y1_1_;
+poly f17 = new_n285_ - 1 + new_Multi4_y0_1_ + new_Multi4_y1_1_ - new_Multi4_y0_1_*new_Multi4_y1_1_;
+poly f18 = m1 - 1 + new_n283_ + new_n285_ - new_n283_*new_n285_;
+poly f19 = new_n295_ - new_Multi4_y0_2_*new_Multi4_y1_2_;
+poly f20 = new_n297_ - 1 + new_Multi4_y0_2_ + new_Multi4_y1_2_ - new_Multi4_y0_2_*new_Multi4_y1_2_;
+poly f21 = new_n299_ - 1 + new_n295_ + new_n297_ - new_n295_*new_n297_;
+poly f22 = new_n301_ - new_n283_*new_n299_;
+poly f23 = new_n303_ - 1 + new_n283_ + new_n299_ - new_n283_*new_n299_;
+poly f24 = new_Multi4_x2_2_ - 1 + new_n301_ + new_n303_ - new_n301_*new_n303_;
+poly f25 = new_Multi4_ADD8_10__2_ - new_n295_ - new_n301_ + new_n295_*new_n301_;
+poly f26 = new_n307_ - new_Multi4_y0_3_*new_Multi4_y1_3_;
+poly f27 = new_n309_ - 1 + new_Multi4_y0_3_ + new_Multi4_y1_3_ - new_Multi4_y0_3_*new_Multi4_y1_3_;
+poly f28 = new_n311_ - 1 + new_n307_ + new_n309_ - new_n307_*new_n309_;
+poly f29 = new_n313_ - new_Multi4_ADD8_10__2_*new_n311_;
+poly f30 = new_n315_ - 1 + new_Multi4_ADD8_10__2_ + new_n311_ - new_Multi4_ADD8_10__2_*new_n311_;
+poly f31 = new_Multi4_x2_3_ - 1 + new_n313_ + new_n315_ - new_n313_*new_n315_;
+poly f32 = new_Multi4_ADD8_10__3_ - new_n307_ - new_n313_ + new_n307_*new_n313_;
+poly f33 = new_n325_ - new_Multi4_ADD8_10__3_*new_Multi4_y1_4_;
+poly f34 = new_n327_ - 1 + new_Multi4_ADD8_10__3_ + new_Multi4_y1_4_ - new_Multi4_ADD8_10__3_*new_Multi4_y1_4_;
+poly f35 = new_Multi4_x2_4_ - 1 + new_n325_ + new_n327_ - new_n325_*new_n327_;
+poly f36 = new_n400_ - new_Multi4_x2_2_*new_Multi4_y2_2_;
+poly f37 = new_n402_ - 1 + new_Multi4_x2_2_ + new_Multi4_y2_2_ - new_Multi4_x2_2_*new_Multi4_y2_2_;
+poly f38 = m2 - 1 + new_n400_ + new_n402_ - new_n400_*new_n402_;
+poly f39 = new_n412_ - new_Multi4_x2_3_*new_Multi4_y2_3_;
+poly f40 = new_n414_ - 1 + new_Multi4_x2_3_ + new_Multi4_y2_3_ - new_Multi4_x2_3_*new_Multi4_y2_3_;
+poly f41 = new_n416_ - 1 + new_n412_ + new_n414_ - new_n412_*new_n414_;
+poly f42 = new_n418_ - new_n400_*new_n416_;
+poly f43 = new_n420_ - 1 + new_n400_ + new_n416_ - new_n400_*new_n416_;
+poly f44 = new_Multi4_x3_3_ - 1 + new_n418_ + new_n420_ - new_n418_*new_n420_;
+poly f45 = new_Multi4_ADD8_19__3_ - new_n412_ - new_n418_ + new_n412_*new_n418_;
+poly f46 = new_n424_ - new_Multi4_x2_4_*new_Multi4_y2_4_;
+poly f47 = new_n426_ - 1 + new_Multi4_x2_4_ + new_Multi4_y2_4_ - new_Multi4_x2_4_*new_Multi4_y2_4_;
+poly f48 = new_n428_ - 1 + new_n424_ + new_n426_ - new_n424_*new_n426_;
+poly f49 = new_n430_ - new_Multi4_ADD8_19__3_*new_n428_;
+poly f50 = new_n432_ - 1 + new_Multi4_ADD8_19__3_ + new_n428_ - new_Multi4_ADD8_19__3_*new_n428_;
+poly f51 = new_Multi4_x3_4_ - 1 + new_n430_ + new_n432_ - new_n430_*new_n432_;
+poly f52 = new_Multi4_ADD8_19__4_ - new_n424_ - new_n430_ + new_n424_*new_n430_;
+poly f53 = new_n436_ - new_n325_*new_Multi4_y2_5_;
+poly f54 = new_n438_ - 1 + new_n325_ + new_Multi4_y2_5_ - new_n325_*new_Multi4_y2_5_;
+poly f55 = new_n440_ - 1 + new_n436_ + new_n438_ - new_n436_*new_n438_;
+poly f56 = new_n442_ - new_Multi4_ADD8_19__4_*new_n440_;
+poly f57 = new_n444_ - 1 + new_Multi4_ADD8_19__4_ + new_n440_ - new_Multi4_ADD8_19__4_*new_n440_;
+poly f58 = new_Multi4_x3_5_ - 1 + new_n442_ + new_n444_ - new_n442_*new_n444_;
+poly f59 = new_Multi4_ADD8_19__5_ - new_n436_ - new_n442_ + new_n436_*new_n442_;
+poly f60 = new_n517_ - new_Multi4_x3_3_*new_Multi4_y3_3_;
+poly f61 = new_n519_ - 1 + new_Multi4_x3_3_ + new_Multi4_y3_3_ - new_Multi4_x3_3_*new_Multi4_y3_3_;
+poly f62 = m3 - 1 + new_n517_ + new_n519_ - new_n517_*new_n519_;
+poly f63 = new_n529_ - new_Multi4_x3_4_*new_Multi4_y3_4_;
+poly f64 = new_n531_ - 1 + new_Multi4_x3_4_ + new_Multi4_y3_4_ - new_Multi4_x3_4_*new_Multi4_y3_4_;
+poly f65 = new_n533_ - 1 + new_n529_ + new_n531_ - new_n529_*new_n531_;
+poly f66 = new_n535_ - new_n517_*new_n533_;
+poly f67 = new_n537_ - 1 + new_n517_ + new_n533_ - new_n517_*new_n533_;
+poly f68 = m4 - 1 + new_n535_ + new_n537_ - new_n535_*new_n537_;
+poly f69 = new_Multi4_ADD8_28__4_ - new_n529_ - new_n535_ + new_n529_*new_n535_;
+poly f70 = new_n541_ - new_Multi4_x3_5_*new_Multi4_y3_5_;
+poly f71 = new_n543_ - 1 + new_Multi4_x3_5_ + new_Multi4_y3_5_ - new_Multi4_x3_5_*new_Multi4_y3_5_;
+poly f72 = new_n545_ - 1 + new_n541_ + new_n543_ - new_n541_*new_n543_;
+poly f73 = new_n547_ - new_Multi4_ADD8_28__4_*new_n545_;
+poly f74 = new_n549_ - 1 + new_Multi4_ADD8_28__4_ + new_n545_ - new_Multi4_ADD8_28__4_*new_n545_;
+poly f75 = m5 - 1 + new_n547_ + new_n549_ - new_n547_*new_n549_;
+poly f76 = new_Multi4_ADD8_28__5_ - new_n541_ - new_n547_ + new_n541_*new_n547_;
+poly f77 = new_n553_ - new_Multi4_ADD8_19__5_*new_Multi4_y3_6_;
+poly f78 = new_n555_ - 1 + new_Multi4_ADD8_19__5_ + new_Multi4_y3_6_ - new_Multi4_ADD8_19__5_*new_Multi4_y3_6_;
+poly f79 = new_n557_ - 1 + new_n553_ + new_n555_ - new_n553_*new_n555_;
+poly f80 = new_n559_ - new_Multi4_ADD8_28__5_*new_n557_;
+poly f81 = new_n561_ - 1 + new_Multi4_ADD8_28__5_ + new_n557_ - new_Multi4_ADD8_28__5_*new_n557_;
+poly f82 = m6 - 1 + new_n559_ + new_n561_ - new_n559_*new_n561_;
+poly f83 = m7 - new_n553_ - new_n559_ + new_n553_*new_n559_;
+ideal J = f0, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14, f15, f16, f17, f18, f19, f20, f21, f22, f23, f24, f25, f26, f27, f28, f29, f30, f31, f32, f33, f34, f35, f36, f37, f38, f39, f40, f41, f42, f43, f44, f45, f46, f47, f48, f49, f50, f51, f52, f53, f54, f55, f56, f57, f58, f59, f60, f61, f62, f63, f64, f65, f66, f67, f68, f69, f70, f71, f72, f73, f74, f75, f76, f77, f78, f79, f80, f81, f82, f83;
+
+//Define the input vanishing polys
+
+poly f84 = a0^2 - a0;
+poly f85 = a1^2 - a1;
+poly f86 = a2^2 - a2;
+poly f87 = a3^2 - a3;
+poly f88 = b0^2 - b0;
+poly f89 = b1^2 - b1;
+poly f90 = b2^2 - b2;
+poly f91 = b3^2 - b3;
+ideal J0 = f84, f84, f85, f86, f87, f88, f89, f90, f91;
+
+//Computer groebner basis G from J and J0
+
+ideal G = J + J0;
