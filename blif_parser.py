@@ -77,6 +77,7 @@ def parse_line(line):
 
 
 
+
 #This returns a string for a new polynomial
 def get_next_poly(gate):
     poly = ''
@@ -111,7 +112,7 @@ def get_RTTO_order_string(model):
     #all outputs should be higher than their inputs
     for output in model['outputs']:
         model['Nets'][output] = max_value
-    ring = 'ring r = 2, ('
+    ring = 'ring r = 0, ('
 
     terms = [k for k, v in sorted(model['Nets'].items(), reverse=True, key=lambda item: item[1])]
 
