@@ -1,0 +1,173 @@
+# Benchmark "Multi4" written by ABC on Sat Dec  4 20:26:19 2021
+.model Multi4
+.inputs a0 a1 a2 a3 b0 b1 b2 b3
+.outputs m0 m1 m2 m3 m4 m5 m6 m7
+.names b0 a0 m0
+11 1
+.names b0 a1 new_Multi4|y0_1_
+11 1
+.names b0 a2 new_Multi4|y0_2_
+11 1
+.names b0 a3 new_Multi4|y0_3_
+11 1
+.names b1 a0 new_Multi4|y1_1_
+11 1
+.names b1 a1 new_Multi4|y1_2_
+11 1
+.names b1 a2 new_Multi4|y1_3_
+11 1
+.names b1 a3 new_Multi4|y1_4_
+11 1
+.names b2 a0 new_Multi4|y2_2_
+11 1
+.names b2 a1 new_Multi4|y2_3_
+11 1
+.names b2 a2 new_Multi4|y2_4_
+11 1
+.names b2 a3 new_Multi4|y2_5_
+11 1
+.names b3 a0 new_Multi4|y3_3_
+11 1
+.names b3 a1 new_Multi4|y3_4_
+11 1
+.names b3 a2 new_Multi4|y3_5_
+11 1
+.names b3 a3 new_Multi4|y3_6_
+11 1
+.names new_Multi4|y0_1_ new_Multi4|y1_1_ new_n283_
+11 1
+.names new_Multi4|y0_1_ new_Multi4|y1_1_ new_n285_
+00 1
+.names new_n283_ new_n285_ m1
+00 1
+.names new_Multi4|y0_2_ new_Multi4|y1_2_ new_n295_
+11 1
+.names new_Multi4|y0_2_ new_Multi4|y1_2_ new_n297_
+00 1
+.names new_n295_ new_n297_ new_n299_
+00 1
+.names new_n283_ new_n299_ new_n301_
+11 1
+.names new_n283_ new_n299_ new_n303_
+00 1
+.names new_n301_ new_n303_ new_Multi4|x2_2_
+00 1
+.names new_n295_ new_n301_ new_Multi4|ADD8(10)|2_
+00 0
+.names new_Multi4|y0_3_ new_Multi4|y1_3_ new_n307_
+11 1
+.names new_Multi4|y0_3_ new_Multi4|y1_3_ new_n309_
+00 1
+.names new_n307_ new_n309_ new_n311_
+00 1
+.names new_Multi4|ADD8(10)|2_ new_n311_ new_n313_
+11 1
+.names new_Multi4|ADD8(10)|2_ new_n311_ new_n315_
+00 1
+.names new_n313_ new_n315_ new_Multi4|x2_3_
+00 1
+.names new_n307_ new_n313_ new_Multi4|ADD8(10)|3_
+00 0
+.names new_Multi4|ADD8(10)|3_ new_Multi4|y1_4_ new_n325_
+11 1
+.names new_Multi4|ADD8(10)|3_ new_Multi4|y1_4_ new_n327_
+00 1
+.names new_n325_ new_n327_ new_Multi4|x2_4_
+00 1
+.names new_Multi4|x2_2_ new_Multi4|y2_2_ new_n400_
+11 1
+.names new_Multi4|x2_2_ new_Multi4|y2_2_ new_n402_
+00 1
+.names new_n400_ new_n402_ m2
+00 1
+.names new_Multi4|x2_3_ new_Multi4|y2_3_ new_n412_
+11 1
+.names new_Multi4|x2_3_ new_Multi4|y2_3_ new_n414_
+00 1
+.names new_n412_ new_n414_ new_n416_
+00 1
+.names new_n400_ new_n416_ new_n418_
+11 1
+.names new_n400_ new_n416_ new_n420_
+00 1
+.names new_n418_ new_n420_ new_Multi4|x3_3_
+00 1
+.names new_n412_ new_n418_ new_Multi4|ADD8(19)|3_
+00 0
+.names new_Multi4|x2_4_ new_Multi4|y2_4_ new_n424_
+11 1
+.names new_Multi4|x2_4_ new_Multi4|y2_4_ new_n426_
+00 1
+.names new_n424_ new_n426_ new_n428_
+00 1
+.names new_Multi4|ADD8(19)|3_ new_n428_ new_n430_
+11 1
+.names new_Multi4|ADD8(19)|3_ new_n428_ new_n432_
+00 1
+.names new_n430_ new_n432_ new_Multi4|x3_4_
+00 1
+.names new_n424_ new_n430_ new_Multi4|ADD8(19)|4_
+00 0
+.names new_n325_ new_Multi4|y2_5_ new_n436_
+11 1
+.names new_n325_ new_Multi4|y2_5_ new_n438_
+00 1
+.names new_n436_ new_n438_ new_n440_
+00 1
+.names new_Multi4|ADD8(19)|4_ new_n440_ new_n442_
+11 1
+.names new_Multi4|ADD8(19)|4_ new_n440_ new_n444_
+00 1
+.names new_n442_ new_n444_ new_Multi4|x3_5_
+00 1
+.names new_n436_ new_n442_ new_Multi4|ADD8(19)|5_
+00 0
+.names new_Multi4|x3_3_ new_Multi4|y3_3_ new_n517_
+11 1
+.names new_Multi4|x3_3_ new_Multi4|y3_3_ new_n519_
+00 1
+.names new_n517_ new_n519_ m3
+00 1
+.names new_Multi4|x3_4_ new_Multi4|y3_4_ new_n529_
+11 1
+.names new_Multi4|x3_4_ new_Multi4|y3_4_ new_n531_
+00 1
+.names new_n529_ new_n531_ new_n533_
+00 1
+.names new_n517_ new_n533_ new_n535_
+11 1
+.names new_n517_ new_n533_ new_n537_
+00 1
+.names new_n535_ new_n537_ m4
+00 1
+.names new_n529_ new_n535_ new_Multi4|ADD8(28)|4_
+00 0
+.names new_Multi4|x3_5_ new_Multi4|y3_5_ new_n541_
+11 1
+.names new_Multi4|x3_5_ new_Multi4|y3_5_ new_n543_
+00 1
+.names new_n541_ new_n543_ new_n545_
+00 1
+.names new_Multi4|ADD8(28)|4_ new_n545_ new_n547_
+11 1
+.names new_Multi4|ADD8(28)|4_ new_n545_ new_n549_
+00 1
+.names new_n547_ new_n549_ m5
+00 1
+.names new_n541_ new_n547_ new_Multi4|ADD8(28)|5_
+00 0
+.names new_Multi4|ADD8(19)|5_ new_Multi4|y3_6_ new_n553_
+11 1
+.names new_Multi4|ADD8(19)|5_ new_Multi4|y3_6_ new_n555_
+00 1
+.names new_n553_ new_n555_ new_n557_
+00 1
+.names new_Multi4|ADD8(28)|5_ new_n557_ new_n559_
+11 1
+.names new_Multi4|ADD8(28)|5_ new_n557_ new_n561_
+00 1
+.names new_n559_ new_n561_ m6
+00 1
+.names new_n553_ new_n559_ m7
+00 0
+.end
