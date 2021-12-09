@@ -1,0 +1,243 @@
+// This program implements the Groebner Basis Rewrite algorithm found in:
+//
+// “Formal verification of integer multipliers by combining grobner basiswith logic reduction”,
+// 2016 Design, Automation Test in EuropeConference Exhibition (DATE)
+//
+// Algorithm 1 Grobner Basis Rewriting (GB-Rew)
+//
+// Input: Variables V, Circuit Model G notes: V is 
+// Output: Model G_n rewritten wrt V
+//  1. for g_i (belongs to) G do /* in reverse order of leading monomials */
+//  2.    lv <- lm(g_i)
+//  3.    r <- g_i - lv
+//  4.    while Vars(r) (not set of) V do
+//  5.        Choose v_t (belongs to) Vars(r)
+//  6.        Choose g_t (belongs to) G st lm(g_t) = v_t
+//  7.        r <- Spoly(r, g_t)
+//  8.        r <- XOR-AND-Rule(r)
+//  9.    end while
+// 10.   g_i <- r + lv
+// 11. end for
+// 12. G_n <- UpdateModel(G, V) /* remove polynomials whoose leading terms are not in V */
+// 13. return G_n
+//
+// Algorithm 2 Logic Reduction Rewriting
+//
+// Input: Specification Polynomial p_spec, Circuit Model G
+// Output: Circuit Model G
+// 1. V <- XORRewritingVariables(G)
+// 2. G <- GB-Rew(V, G)
+// 3. V <- CommonRewritingVariables(G)
+// 4. G <- GB-Rew(V, G)
+// 5. return G
+
+// Import library for spoly function
+LIB "teachstd.lib";
+LIB "polylib.lib";
+
+////////////////////
+//// GATE TYPES ////
+////////////////////
+
+// z = ~a => g := -z + 1 - a
+// z = a*b => g := -z + a*b
+// z = a + b => g := -z + a + b - a*b
+// z = XOR(a,b) => g := -z + a + b - 2*a*b
+
+////////////////////
+//// TEST INPUT ////
+////////////////////
+
+// Boolean ring (Q)
+ring r = 0, (ci, si, x_4, x_3, x_2 , x_1, ci_1, bi, ai), lp;
+
+poly g1 = -ci - x_4*x_3 + x_4 + x_3; 
+poly g2 = -si - 2*x_1*ci_1 + x_1 + ci_1;
+poly g3 = -x_4 + x_2*ci_1;
+poly g4 = -x_3 + ai*bi;
+poly g5 = -x_2 - ai*bi + ai + bi;
+poly g6 = -x_1 - 2*ai*bi + ai + bi;
+
+ideal J = g1, g2, g3, g4, g5, g6;
+
+poly b1 = ci^2 - ci;
+poly b2 = si^2 - si;
+poly b3 = x_4^2 - x_4;
+poly b4 = x_3^2 - x_3;
+poly b5 = x_2^2 - x_2;
+poly b6 = x_1^2 - x_1;
+poly b7 = ci_1^2 - ci_1;
+poly b8 = bi^2 - bi;
+poly b9 = ai^2 - ai;
+
+ideal J0 = b1, b2, b3, b4 ,b5, b6, b7, b8, b9;
+
+poly pspec = -2*ci - si + ci_1 + bi + ai;
+ideal G = J + J0;
+
+///////////////////
+//// FUNCTIONS ////
+///////////////////
+
+// Use function to determine if polynomial expression represents an XOR gate
+proc XOR_query (poly g)
+{
+    ideal vars = variables(g);
+    int XOR_check = (g == -vars[1] + vars[2] + vars[3] -2*vars[2]*vars[3]);
+    if (XOR_check)
+    {
+        return(vars);
+    }
+    else
+    {
+        return(ideal());
+    }
+}
+
+// Determines if g_tail shares variables contained in ideal V
+proc vars_r_not_in_V (poly g_tail, ideal V)
+{
+    int size_g = size(variables(g_tail));
+    int size_V = size(V);
+    intvec logic; 
+    for (int i = 1; i <= size_g; i = i + 1)
+    {
+        for (int j = 1; j <= size_V; j = j + 1)
+        {
+            logic = logic + (variables(g_tail)[i] == variables(V)[j]);
+        }
+    }
+    int result;
+    if (logic != size_g)
+    {
+        result = 1;
+    }
+    else
+    {
+        result = 0;
+    }
+    return(result);
+}
+
+// Finds vt; vt is a variable not in V
+proc choose_vt (poly g_tail, ideal V)
+{
+    int size_g = size(variables(g_tail));
+    int size_V = size(V);
+    intvec logic; 
+    while (1)
+    {
+        for (int i = 1; i <= size_g; i = i + 1)
+        {
+            for (int j = 1; j <= size_V; j = j + 1)
+            {
+                logic = logic + (variables(g_tail)[i] == variables(V)[j]);
+            }
+            if (logic == 0)
+            {
+                return(g_tail[i]);
+                break;
+            }
+        }
+        break;
+    }    
+}
+
+// Finds gt in G such that leadmonom(gt) = vt
+proc choose_gt (poly vt, ideal G)
+{
+    int size_G = size(G);
+    while(1)
+    {
+        for (int i = 1; i <= size_G; i = i + 1)
+        {
+            if (vt == leadmonom(G[i]))
+            {
+                return(G[i]);
+                break;
+            } 
+        }
+        break;
+    }
+}
+
+// Repeats Spoly until vt is removed from g_tail
+proc spoly_repeat (poly vt, poly g_tail, poly gt)
+{
+    poly g_tail_new = spoly(g_tail, gt);
+    while(1)
+    {
+        int size_g_tail = size(variables(g_tail_new));
+        int logic = 0;
+        for (int i = 1; i <= size_g_tail; i = i + 1)
+        {
+            logic = logic + (vt == variables(g_tail_new)[i]);
+        }
+        if (logic != 0)
+        {
+            g_tail_new = spoly(g_tail_new, gt);
+        }
+        else
+        {
+            return(g_tail_new);
+            break;
+        }
+    }
+}
+
+////////////////
+//// GB-REW ////
+////////////////
+
+// get list V; contains inputs/outputs of XOR gates and primary inputs (PI) and primary outputs (PO)
+ideal V;
+int i = ncols(G);
+for (int j = 1; j <= i; j = j + 1)
+{
+    V = V + XOR_query(G[j]);
+}
+ideal PI = ai, bi, ci_1;
+ideal PO = ci, si;
+V = V + PI + PO;
+
+//for (int j = i; j >= 0; j = j - 1)
+//{
+    //poly lv = leadmonom(G[j]);
+    //number lc = leadcoef(G[j]);
+    //poly g_tail = G[j] - lc*lv;
+    //while (vars_r_not_in_V(g_tail, V))
+    //{
+      poly vt = choose_vt(g_tail, V);
+      poly gt = choose_gt(vt, G);
+      g_tail = spoly_repeat(vt, g_tail, gt);
+      g_tail = XORAND-Rule
+    //}
+//}
+
+/////////////////
+//// SCRATCH ////
+/////////////////
+
+poly g_tail = x_4;
+g_tail;
+V;
+vars_r_not_in_V(g_tail, V);
+poly f = choose_vt(g_tail, V);
+f;
+poly p = choose_gt(f, G);
+p;
+
+poly f1 = spoly_repeat(ci, pspec, g1);
+poly f2 = spoly_repeat(si, f1, g2);
+poly f3 = spoly_repeat(x_4, f2, g3);
+poly f4 = spoly_repeat(x_3, f3, g4);
+poly f5 = spoly_repeat(x_2, f4, g5);
+poly f6 = spoly_repeat(x_1, f5, g6);
+
+f1;
+f2;
+f3;
+f4;
+f5;
+f6;
+maxdeg(f5);
