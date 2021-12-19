@@ -1,0 +1,18 @@
+# Benchmark "Multi2" written by ABC on Sat Dec 18 22:09:13 2021
+.model Multi2
+.inputs a0 a1 b0 b1
+.outputs m0 m1 m2 m3
+.gate and2  a=a0 b=b0 O=m0
+.gate and2  a=a1 b=b0 O=new_n10_
+.gate and2  a=a0 b=b1 O=new_n11_
+.gate xor   a=new_n10_ b=new_n11_ O=m1
+.gate and2  a=new_n10_ b=new_n11_ O=new_n13_
+.gate and2  a=a1 b=b1 O=new_n14_
+.gate and2  a=new_n14_ b=new_n13_ O=m3
+.gate inv1x a=m3 O=new_n16_
+.gate inv1x a=new_n13_ O=new_n17_
+.gate inv1x a=new_n14_ O=new_n18_
+.gate and2  a=new_n18_ b=new_n17_ O=new_n19_
+.gate inv1x a=new_n19_ O=new_n20_
+.gate and2  a=new_n16_ b=new_n20_ O=m2
+.end

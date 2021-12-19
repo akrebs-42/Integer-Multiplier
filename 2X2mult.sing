@@ -1,0 +1,35 @@
+//Define the ring
+
+ring r = 0, (m0, m1, m3, m2, new_n20_, new_n16_, new_n19_, new_n17_, new_n13_, new_n18_, new_n10_, new_n11_, new_n14_, a0, a1, b0, b1), lp;
+
+//Define the gate polys
+
+poly f0 = -m0 + a0*b0;
+poly f1 = -new_n10_ + a1*b0;
+poly f2 = -new_n11_ + a0*b1;
+poly f3 = -m1 + new_n10_ + new_n11_ - 2*new_n10_*new_n11_;
+poly f4 = -new_n13_ + new_n10_*new_n11_;
+poly f5 = -new_n14_ + a1*b1;
+poly f6 = -m3 + new_n14_*new_n13_;
+poly f7 = -new_n16_ + 1 - m3;
+poly f8 = -new_n17_ + 1 - new_n13_;
+poly f9 = -new_n18_ + 1 - new_n14_;
+poly f10 = -new_n19_ + new_n18_*new_n17_;
+poly f11 = -new_n20_ + 1 - new_n19_;
+poly f12 = -m2 + new_n16_*new_n20_;
+ideal J = f0, f3, f6, f12, f11, f7, f10, f8, f4, f9, f1, f2, f5;
+//Define the input vanishing polys
+
+poly f13 = a0^2 - a0;
+poly f14 = a1^2 - a1;
+poly f15 = b0^2 - b0;
+poly f16 = b1^2 - b1;
+ideal J0 = f13, f14, f15, f16;
+
+//Define the primary ideal
+
+ideal primary = m0, m1, m2, m3, a0, a1, b0, b1;
+
+//Computer groebner basis G from J and J0
+
+ideal G = J + J0;
