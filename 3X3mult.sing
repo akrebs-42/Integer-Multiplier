@@ -1,0 +1,69 @@
+//Define the ring
+
+ring r = 0, (m0, m1, m2, m3, m4, m5, new_n56_, new_n55_, new_n54_, new_n53_, new_n44_, new_n43_, new_n42_, new_n40_, new_n49_, new_n52_, new_n35_, new_n39_, new_n48_, new_n51_, new_n34_, new_n38_, new_n46_, new_n32_, new_n36_, new_n45_, new_n29_, new_n24_, new_n28_, new_n21_, new_n26_, new_n27_, new_n17_, new_n20_, new_n25_, new_n31_, new_n37_, new_n14_, new_n15_, new_n18_, new_n19_, new_n22_, new_n30_, new_n33_, new_n47_, a0, a1, a2, b0, b1, b2), lp;
+
+//Define the gate polys
+
+poly f0 = -m0 + a0*b0;
+poly f1 = -new_n14_ + a1*b0;
+poly f2 = -new_n15_ + a0*b1;
+poly f3 = -m1 + new_n14_ + new_n15_ - 2*new_n14_*new_n15_;
+poly f4 = -new_n17_ + new_n14_*new_n15_;
+poly f5 = -new_n18_ + a2*b0;
+poly f6 = -new_n19_ + a1*b1;
+poly f7 = -new_n20_ + new_n18_ + new_n19_ - 2*new_n18_*new_n19_;
+poly f8 = -new_n21_ + new_n20_ + new_n17_ - 2*new_n20_*new_n17_;
+poly f9 = -new_n22_ + a0*b2;
+poly f10 = -m2 + new_n21_ + new_n22_ - 2*new_n21_*new_n22_;
+poly f11 = -new_n24_ + new_n22_*new_n21_;
+poly f12 = -new_n25_ + new_n18_*new_n19_;
+poly f13 = -new_n26_ + 1 - new_n25_;
+poly f14 = -new_n27_ + new_n17_*new_n20_;
+poly f15 = -new_n28_ + 1 - new_n27_;
+poly f16 = -new_n29_ + new_n26_*new_n28_;
+poly f17 = -new_n30_ + a2*b1;
+poly f18 = -new_n31_ + 1 - new_n30_;
+poly f19 = -new_n32_ + new_n29_ + new_n31_ - 2*new_n29_*new_n31_;
+poly f20 = -new_n33_ + a1*b2;
+poly f21 = -new_n34_ + new_n33_*new_n32_;
+poly f22 = -new_n35_ + 1 - new_n34_;
+poly f23 = -new_n36_ + new_n29_ + new_n30_ - 2*new_n29_*new_n30_;
+poly f24 = -new_n37_ + 1 - new_n33_;
+poly f25 = -new_n38_ + new_n37_*new_n36_;
+poly f26 = -new_n39_ + 1 - new_n38_;
+poly f27 = -new_n40_ + new_n35_*new_n39_;
+poly f28 = -m3 + new_n40_ + new_n24_ - 2*new_n40_*new_n24_;
+poly f29 = -new_n42_ + new_n24_*new_n40_;
+poly f30 = -new_n43_ + 1 - new_n42_;
+poly f31 = -new_n44_ + new_n35_*new_n43_;
+poly f32 = -new_n45_ + 1 - new_n29_;
+poly f33 = -new_n46_ + new_n30_*new_n45_;
+poly f34 = -new_n47_ + a2*b2;
+poly f35 = -new_n48_ + new_n46_ + new_n47_ - 2*new_n46_*new_n47_;
+poly f36 = -new_n49_ + 1 - new_n48_;
+poly f37 = -m4 + new_n44_ + new_n49_ - 2*new_n44_*new_n49_;
+poly f38 = -new_n51_ + new_n47_*new_n46_;
+poly f39 = -new_n52_ + 1 - new_n51_;
+poly f40 = -new_n53_ + 1 - new_n44_;
+poly f41 = -new_n54_ + new_n48_*new_n53_;
+poly f42 = -new_n55_ + 1 - new_n54_;
+poly f43 = -new_n56_ + new_n52_*new_n55_;
+poly f44 = -m5 + 1 - new_n56_;
+ideal J = f0, f3, f10, f28, f37, f44, f43, f42, f41, f40, f31, f30, f29, f27, f36, f39, f22, f26, f35, f38, f21, f25, f33, f19, f23, f32, f16, f11, f15, f8, f13, f14, f4, f7, f12, f18, f24, f1, f2, f5, f6, f9, f17, f20, f34;
+//Define the input vanishing polys
+
+poly f45 = a0^2 - a0;
+poly f46 = a1^2 - a1;
+poly f47 = a2^2 - a2;
+poly f48 = b0^2 - b0;
+poly f49 = b1^2 - b1;
+poly f50 = b2^2 - b2;
+ideal J0 = f45, f46, f47, f48, f49, f50;
+
+//Define the primary ideal
+
+ideal primary = m0, m1, m2, m3, m4, m5, a0, a1, a2, b0, b1, b2;
+
+//Computer groebner basis G from J and J0
+
+ideal G = J + J0;
