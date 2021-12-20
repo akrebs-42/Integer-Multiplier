@@ -179,7 +179,7 @@ proc XOR_AND_RULE (poly g, ideal G)
       }
     }
   }
-  return(f);
+  return(f, counter);
 }
 
 //Example of the XOR_AND_RULE being run on a simple circuit
@@ -191,6 +191,7 @@ ideal G = f1, f2, f3;
 
 //Note the XOR_AND_RULE will return the tail after all multipliers that
 //are invalid have been removed
-poly f1_tail = XOR_AND_RULE(f1, G);
+poly f1_tail = XOR_AND_RULE(f1, G)[1];
+int counter = XOR_AND_RULE(f1, G)[2];
 printf("Tail of f1");
 f1_tail;
