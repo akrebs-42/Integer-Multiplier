@@ -147,7 +147,7 @@ def get_RTTO_order_string(model):
     #all outputs should be higher than their inputs
     for output in model['outputs']:
         model['Nets'][output] = max_value
-    ring = 'ring r = 0, ('
+    ring = 'ring R = 0, ('
 
     #Descending sort of terms
     terms = [k for k, v in sorted(model['Nets'].items(), reverse=True, key=lambda item: item[1])]
@@ -172,7 +172,7 @@ def get_ideal(model, polys):
     #Write the ideal such that the higher ordered terms are added to the ideal first
     #This should help the singular file to run more efficiently
     terms = [k for k, v in sorted(model['Nets'].items(), reverse=True, key=lambda item: item[1])]
-    J_str = 'ideal J = '
+    J_str = 'ideal G = '
     for term in terms:
         for poly in polys:
             if term == poly[0].split()[0].replace('-', ''):
@@ -192,6 +192,29 @@ def get_intermediate_nets(model):
     terms = terms[:-2] + ';'
     return terms
 
+def get_integer_mult_spec(model):
+    times = 1
+    fspec = 'poly fspec = ('
+    for output in model['outputs']:
+        fspec += str(times) + '*' + output + ' + '
+        times = times * 2
+    fspec = fspec[:-3] + ') - ('
+    inputs = model['inputs']
+    half = int(len(inputs) / 2)
+    full = len(inputs)
+    times = 1
+    for i in range(half):
+        fspec += str(times) + '*' + inputs[i] + ' + '
+        times = times * 2
+    fspec = fspec[:-3] + ')*('
+    times = 1
+    for i in range(half, full):
+        fspec += str(times) + '*' + inputs[i] + ' + '
+        times = times * 2
+    fspec = fspec[:-3] + ');'
+    return fspec
+
+
 #Writes the Singular file
 def write_singular(model, write_file):
     with open(write_file, 'w') as f:
@@ -202,8 +225,10 @@ def write_singular(model, write_file):
         ring = get_RTTO_order_string(model)
         f.write(ring)
 
+        f.write('\n\n//Define the spec\n' + get_integer_mult_spec(model) + '\n\n')
+
         #Write the gate polynomials
-        f.write('\n//Define the gate polys\n\n')
+        f.write('\n//Define the gate polys\n')
         polys = []
         for gate in model['Connections']:
             next_poly = get_next_poly(gate)
@@ -213,16 +238,18 @@ def write_singular(model, write_file):
         f.write(get_ideal(model, polys))
 
         #Write the vanishing polynomials of the inputs
-        f.write('\n//Define the input vanishing polys\n\n')
-        vanish_start_ind = ind
-        for input in model['inputs']:
-            vanishing_poly = get_vanishing_poly(input)
-            f.write('poly f' + str(ind) + ' = ' + vanishing_poly + ';\n')
-            ind += 1
-        J0_str = 'ideal J0 = f' + str(vanish_start_ind)
-        for i in range(vanish_start_ind + 1, ind):
-            J0_str += ', f' + str(i)
-        f.write(J0_str + ';\n')
+        #This part is not necessary with how the Singular file currently
+        #handles the Grobner basis, may be useful in the future
+        #f.write('\n//Define the input vanishing polys\n\n')
+        #vanish_start_ind = ind
+        #for input in model['inputs']:
+        #    vanishing_poly = get_vanishing_poly(input)
+        #    f.write('poly f' + str(ind) + ' = ' + vanishing_poly + ';\n')
+        #    ind += 1
+        #J0_str = 'ideal J0 = f' + str(vanish_start_ind)
+        #for i in range(vanish_start_ind + 1, ind):
+        #    J0_str += ', f' + str(i)
+        #f.write(J0_str + ';\n')
 
         #Write the primary inputs and outputs as an ideal of their own
         primary = 'ideal primary = ';
@@ -235,8 +262,8 @@ def write_singular(model, write_file):
         f.write('\n//Define the primary ideal\n\n' + primary + ';\n')
 
         #Write the combination ideal of the circuit and vanishing polynomials
-        f.write('\n//Computer groebner basis G from J and J0\n\n')
-        f.write('ideal G = J + J0;\n')
+        #f.write('\n//Computer groebner basis G from J and J0\n\n')
+        #f.write('ideal G = J + J0;\n')
 
         nets = get_intermediate_nets(model)
         f.write('\n' + nets + '\n')
