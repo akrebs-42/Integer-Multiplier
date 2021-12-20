@@ -194,7 +194,7 @@ def get_intermediate_nets(model):
 
 def get_integer_mult_spec(model):
     times = 1
-    fspec = 'fspec = ('
+    fspec = 'poly fspec = ('
     for output in model['outputs']:
         fspec += str(times) + '*' + output + ' + '
         times = times * 2

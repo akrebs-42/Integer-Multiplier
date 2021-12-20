@@ -4,7 +4,7 @@ ring R = 0, (m0, m1, m2, m3, m4, m5, m6, m7, new_n129_, new_n128_, new_n127_, ne
 
 
 //Define the spec
-fspec = (1*m0 + 2*m1 + 4*m2 + 8*m3 + 16*m4 + 32*m5 + 64*m6 + 128*m7) - (1*a0 + 2*a1 + 4*a2 + 8*a3)*(1*b0 + 2*b1 + 4*b2 + 8*b3);
+poly fspec = (1*m0 + 2*m1 + 4*m2 + 8*m3 + 16*m4 + 32*m5 + 64*m6 + 128*m7) - (1*a0 + 2*a1 + 4*a2 + 8*a3)*(1*b0 + 2*b1 + 4*b2 + 8*b3);
 
 
 //Define the gate polys
