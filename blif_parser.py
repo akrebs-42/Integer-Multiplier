@@ -182,6 +182,16 @@ def get_ideal(model, polys):
     J_str = J_str[:-2] + ';'
     return J_str
 
+#Returns all nets that are not primary inputs or outputs as an ideal
+def get_intermediate_nets(model):
+    terms = 'ideal terms = '
+    nets = model['Nets']
+    for net in nets:
+        if not (net in model['inputs'] or net in model['outputs']):
+            terms += net + ', '
+    terms = terms[:-2] + ';'
+    return terms
+
 #Writes the Singular file
 def write_singular(model, write_file):
     with open(write_file, 'w') as f:
@@ -227,6 +237,9 @@ def write_singular(model, write_file):
         #Write the combination ideal of the circuit and vanishing polynomials
         f.write('\n//Computer groebner basis G from J and J0\n\n')
         f.write('ideal G = J + J0;\n')
+
+        nets = get_intermediate_nets(model)
+        f.write('\n' + nets + '\n')
 
 #This is the main set_function
 #Check that a file was given to write to
