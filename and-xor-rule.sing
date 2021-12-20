@@ -1,0 +1,196 @@
+// Import library for spoly function
+LIB "teachstd.lib";
+//LIB "polylib.lib";
+
+// Finds vt; vt is a variable not in V
+proc CHOOSE_VT (poly g_tail, ideal V)
+{
+    int size_g = size(variables(g_tail));
+    int size_V = size(V);
+    intvec logic;
+    for (int i = 1; i <= size_g; i = i + 1)
+    {
+        for (int j = 1; j <= size_V; j = j + 1)
+        {
+            logic = logic + (variables(g_tail)[i] == variables(V)[j]);
+        }
+        if (logic == 1)
+        {
+            return(variables(g_tail)[i]);
+            break;
+        }
+    }
+    return(0);
+}
+
+// Finds gt in G such that leadmonom(gt) = vt
+proc CHOOSE_GT (poly vt, ideal G)
+{
+    int size_G = size(G);
+    for (int i = 1; i <= size_G; i = i + 1)
+    {
+        if (vt == leadmonom(G[i]))
+        {
+            return(G[i]);
+        }
+    }
+    return(0);
+}
+
+// Use function to determine if polynomial expression represents an XOR gate and return variables
+proc XOR_IDENT (poly g)
+{
+    ideal vars = variables(g);
+    if (size(vars) != 3)
+    {
+        return(ideal());
+    }
+    else
+    {
+        int XOR_check = (g == -vars[1] + vars[2] + vars[3] -2*vars[2]*vars[3]);
+        if (XOR_check)
+        {
+            return(vars);
+        }
+        else
+        {
+            return(ideal());
+        }
+    }
+}
+
+// Use function to determine is gate is an XOR gate and return logic 1 or 0
+proc XOR_CHECK (poly g)
+{
+    ideal vars = variables(g);
+    if (size(vars) != 3)
+    {
+        return(0);
+    }
+    else
+    {
+        return(g == -vars[1] + vars[2] + vars[3] -2*vars[2]*vars[3]);
+    }
+}
+
+// Use function to determine if polynomial is an AND gate and return variables
+proc AND_IDENT (poly g)
+{
+    ideal vars = variables(g);
+    if (size(vars) != 3)
+    {
+        return(ideal());
+    }
+    else
+    {
+        int AND_check = (g == -vars[1] + vars[2]*vars[3]);
+        if (AND_check)
+        {
+            return(vars);
+        }
+        else
+        {
+            return(ideal());
+        }
+    }
+}
+
+// Use function to determine if polynomial is an AND gate and return logic 1 or 0
+proc AND_CHECK (poly g)
+{
+    ideal vars = variables(g);
+    if (size(vars) != 3)
+    {
+        return(0);
+    }
+    else
+    {
+        return(g == -vars[1] + vars[2]*vars[3]);
+    }
+}
+
+// proc identify monomials that are multiplied together,
+// check function used in power reduce, max degree
+proc find_multipliers(poly g)
+{
+  list v;
+  int v_ind = 1;
+  int i_size = size(g);
+  for(int i = 1; i <= i_size; i = i + 1)
+  {
+    if(maxdeg(g[i]) > 1)
+    {
+      v[v_ind] = g[i];
+      v_ind = v_ind + 1;
+    }
+  }
+  return(v);
+}
+
+// proc to search for
+proc find_matching(poly f, poly g, ideal G)
+{
+  poly f1 = CHOOSE_GT(f, G);
+  poly g1 = CHOOSE_GT(g, G);
+  if(XOR_CHECK(f1) && AND_CHECK(g1))
+  {
+    ideal f1_vars = XOR_IDENT(f1);
+    ideal g1_vars = AND_IDENT(g1);
+    if(f1_vars[2] == g1_vars[2] && f1_vars[3] == g1_vars[3])
+    {
+      return(1);
+    }
+  }
+  else
+  {
+    if(XOR_CHECK(g1) && AND_CHECK(f1))
+    {
+      ideal f1_vars = AND_IDENT(f1);
+      ideal g1_vars = XOR_IDENT(g1);
+      if(f1_vars[2] == g1_vars[2] && f1_vars[3] == g1_vars[3])
+      {
+        return(1);
+      }
+    }
+  }
+  //May want to update this to actually check deeper, but this should be good for now
+  return(0);
+}
+
+
+proc XOR_AND_RULE (poly g, ideal G)
+{
+  list l = find_multipliers(g);
+  int l_size = size(l);
+  poly f = g;
+  for(int i = 1; i <= l_size; i = i + 1)
+  {
+    ideal vs = variables(l[i]);
+    int var_size = size(vs);
+    for(int j = 1; j <= var_size; j = j + 1)
+    {
+      for(int k = j + 1; k <= var_size; k = k + 1)
+      {
+        if(find_matching(vs[j], vs[k], G))
+        {
+          f = f - l[i];
+          break;
+        }
+      }
+    }
+  }
+  return(f);
+}
+
+//Example of the XOR_AND_RULE being run on a simple circuit
+ring r = 0, (x1, x2, x3, x4, x5, x6, x7), lp;
+poly f1 = x1 + x2*x3*x4 -x2*x4 - x3*x5;
+poly f2 = -x2 + x6*x7;
+poly f3 = -x4 + x6 + x7 - 2*x6*x7;
+ideal G = f1, f2, f3;
+
+//Note the XOR_AND_RULE will return the tail after all multipliers that
+//are invalid have been removed
+poly f1_tail = XOR_AND_RULE(f1, G);
+printf("Tail of f1");
+f1_tail;
