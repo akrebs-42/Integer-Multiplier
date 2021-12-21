@@ -443,6 +443,7 @@ proc GB_REW (ideal G, ideal primary)
 {
     ideal V = V_XOR_PRIMARY(G, primary);
     int size_G = ncols(G);
+    int xor_and_count = 0;
     for (int i = size_G; i >= 1; i = i - 1)
     {
         poly lv = leadmonom(G[i]);
@@ -454,7 +455,12 @@ proc GB_REW (ideal G, ideal primary)
             poly gt = CHOOSE_GT(vt, G);
             r = spoly(r, gt);
             r = POWER_REDUCE(r);
+            list l = find_multipliers(r);
+            int l_size = size(l);
             r = XOR_AND_RULE(r, G);
+            list l2 = find_multipliers(r);
+            int l2_size = size(l2);
+            xor_and_count = xor_and_count + l_size - l2_size;
             if (VARS_NOT_IN_V(r, V))
             {
                 break;
@@ -462,7 +468,9 @@ proc GB_REW (ideal G, ideal primary)
         }
         G[i] = r + lc*lv;
     }
-    ideal Gn;
+    return(G);
+    //This part is invalid, and should be looked into
+/*    ideal Gn;
     int size_V = ncols(V);
     for(int i = 1; i <= size_G; i = i + 1)
     {
@@ -475,11 +483,14 @@ proc GB_REW (ideal G, ideal primary)
         }
       }
     }
-    return(Gn);
+    printf("The number of multiplies removes with AND_XOR_RULE is:");
+    xor_and_count;
+    return(Gn);*/
 }
 
 ideal Gn = GB_REW(G, primary);
-Gn;
+
+
 if(reduce(fspec, Gn + J0) == 0)
 {
   printf("The spec is a member of the GB");
@@ -488,4 +499,5 @@ else
 {
   printf("The spec is invalid");
 }
+
 quit;
