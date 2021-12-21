@@ -27,4 +27,6 @@ No other software needs to be run by the user to verify any results found from t
 The GB-Rew.sing file was created to implement the work found in a paper found at this link: https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7459464&tag=1.
 This file tries to recreate the explained algorithm to create a GB and then reduce that GB prior to applying a membership test of the spec polynomial in the created GB.
 
-Future work can be done in the GB-Rew.sing file to increase efficiency and also to fix any bugs that remain.
+Future work can be done in the GB-Rew.sing file to increase efficiency and also to fix bugs that remain.
+
+Currently the rewriting and reduction are applied to the GB, but appear to be incomplete causing the timing of membership testing to be much larger than it should be or to be roughly equivalent to the original spec check.
