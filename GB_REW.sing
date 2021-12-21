@@ -603,6 +603,14 @@ proc GB_REW (ideal G, ideal primary)
             r;
             r = XOR_AND_RULE(r, G);
             r;
+            if (VARS_NOT_IN_V(r, V))
+            {
+                break;
+            }
+            else
+            {
+                continue;
+            }
         }
         G[i] = r + lc*lv;
         if (INV_check)
@@ -613,3 +621,6 @@ proc GB_REW (ideal G, ideal primary)
     return(G);
     // need update model still
 }
+
+G;
+GB_REW(G, primary);
