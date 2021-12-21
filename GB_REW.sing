@@ -5,7 +5,7 @@
 //
 // Algorithm 1 Grobner Basis Rewriting (GB-Rew)
 //
-// Input: Variables V, Circuit Model G notes: V is 
+// Input: Variables V, Circuit Model G notes: V is
 // Output: Model G_n rewritten wrt V
 //  1. for g_i (belongs to) G do /* in reverse order of leading monomials */
 //  2.    lv <- lm(g_i)
@@ -85,141 +85,6 @@ EXAMPLE: example maxdeg; shows examples
 // z = a*b => g := -z + a*b
 // z = a + b => g := -z + a + b - a*b
 // z = XOR(a,b) => g := -z + a + b - 2*a*b
-
-////////////////////
-/////// TEST ///////
-////////////////////
-
-//Define the ring
-
-ring R = 0, (m0, m1, m2, m3, m4, m5, m6, m7, new_n129_, new_n128_, new_n127_, new_n126_, new_n112_, new_n111_, new_n110_, new_n95_, new_n122_, new_n125_, new_n94_, new_n121_, new_n124_, new_n93_, new_n119_, new_n92_, new_n108_, new_n118_, new_n90_, new_n103_, new_n107_, new_n117_, new_n85_, new_n102_, new_n106_, new_n116_, new_n84_, new_n100_, new_n104_, new_n115_, new_n82_, new_n89_, new_n96_, new_n78_, new_n88_, new_n77_, new_n86_, new_n76_, new_n81_, new_n71_, new_n80_, new_n70_, new_n79_, new_n54_, new_n68_, new_n99_, new_n114_, new_n53_, new_n64_, new_n75_, new_n98_, new_n113_, new_n50_, new_n52_, new_n63_, new_n67_, new_n74_, new_n47_, new_n51_, new_n61_, new_n66_, new_n72_, new_n46_, new_n60_, new_n41_, new_n45_, new_n59_, new_n40_, new_n44_, new_n58_, new_n38_, new_n42_, new_n57_, new_n33_, new_n28_, new_n32_, new_n25_, new_n30_, new_n31_, new_n37_, new_n56_, new_n21_, new_n24_, new_n29_, new_n36_, new_n43_, new_n55_, new_n65_, new_n73_, new_n87_, new_n105_, new_n18_, new_n19_, new_n22_, new_n23_, new_n26_, new_n34_, new_n35_, new_n39_, new_n48_, new_n62_, new_n69_, new_n83_, new_n97_, new_n101_, new_n120_, a0, a1, a2, a3, b0, b1, b2, b3), lp;
-
-
-//Define the spec
-poly fspec = (1*m0 + 2*m1 + 4*m2 + 8*m3 + 16*m4 + 32*m5 + 64*m6 + 128*m7) - (1*a0 + 2*a1 + 4*a2 + 8*a3)*(1*b0 + 2*b1 + 4*b2 + 8*b3);
-
-
-//Define the gate polys
-poly f0 = -m0 + a0*b0;
-poly f1 = -new_n18_ + a1*b0;
-poly f2 = -new_n19_ + a0*b1;
-poly f3 = -m1 + new_n18_ + new_n19_ - 2*new_n18_*new_n19_;
-poly f4 = -new_n21_ + new_n18_*new_n19_;
-poly f5 = -new_n22_ + a2*b0;
-poly f6 = -new_n23_ + a1*b1;
-poly f7 = -new_n24_ + new_n22_ + new_n23_ - 2*new_n22_*new_n23_;
-poly f8 = -new_n25_ + new_n24_ + new_n21_ - 2*new_n24_*new_n21_;
-poly f9 = -new_n26_ + a0*b2;
-poly f10 = -m2 + new_n25_ + new_n26_ - 2*new_n25_*new_n26_;
-poly f11 = -new_n28_ + new_n26_*new_n25_;
-poly f12 = -new_n29_ + new_n22_*new_n23_;
-poly f13 = -new_n30_ + 1 - new_n29_;
-poly f14 = -new_n31_ + new_n21_*new_n24_;
-poly f15 = -new_n32_ + 1 - new_n31_;
-poly f16 = -new_n33_ + new_n30_*new_n32_;
-poly f17 = -new_n34_ + a3*b0;
-poly f18 = -new_n35_ + a2*b1;
-poly f19 = -new_n36_ + new_n34_ + new_n35_ - 2*new_n34_*new_n35_;
-poly f20 = -new_n37_ + 1 - new_n36_;
-poly f21 = -new_n38_ + new_n33_ + new_n37_ - 2*new_n33_*new_n37_;
-poly f22 = -new_n39_ + a1*b2;
-poly f23 = -new_n40_ + new_n39_*new_n38_;
-poly f24 = -new_n41_ + 1 - new_n40_;
-poly f25 = -new_n42_ + new_n33_ + new_n36_ - 2*new_n33_*new_n36_;
-poly f26 = -new_n43_ + 1 - new_n39_;
-poly f27 = -new_n44_ + new_n43_*new_n42_;
-poly f28 = -new_n45_ + 1 - new_n44_;
-poly f29 = -new_n46_ + new_n41_*new_n45_;
-poly f30 = -new_n47_ + new_n46_ + new_n28_ - 2*new_n46_*new_n28_;
-poly f31 = -new_n48_ + a0*b3;
-poly f32 = -m3 + new_n47_ + new_n48_ - 2*new_n47_*new_n48_;
-poly f33 = -new_n50_ + new_n48_*new_n47_;
-poly f34 = -new_n51_ + new_n28_*new_n46_;
-poly f35 = -new_n52_ + 1 - new_n51_;
-poly f36 = -new_n53_ + new_n41_*new_n52_;
-poly f37 = -new_n54_ + 1 - new_n53_;
-poly f38 = -new_n55_ + new_n34_*new_n35_;
-poly f39 = -new_n56_ + 1 - new_n55_;
-poly f40 = -new_n57_ + 1 - new_n33_;
-poly f41 = -new_n58_ + new_n36_*new_n57_;
-poly f42 = -new_n59_ + 1 - new_n58_;
-poly f43 = -new_n60_ + new_n56_*new_n59_;
-poly f44 = -new_n61_ + 1 - new_n60_;
-poly f45 = -new_n62_ + a3*b1;
-poly f46 = -new_n63_ + new_n62_*new_n61_;
-poly f47 = -new_n64_ + 1 - new_n63_;
-poly f48 = -new_n65_ + 1 - new_n62_;
-poly f49 = -new_n66_ + new_n65_*new_n60_;
-poly f50 = -new_n67_ + 1 - new_n66_;
-poly f51 = -new_n68_ + new_n67_*new_n64_;
-poly f52 = -new_n69_ + a2*b2;
-poly f53 = -new_n70_ + new_n69_*new_n68_;
-poly f54 = -new_n71_ + 1 - new_n70_;
-poly f55 = -new_n72_ + new_n60_ + new_n62_ - 2*new_n60_*new_n62_;
-poly f56 = -new_n73_ + 1 - new_n69_;
-poly f57 = -new_n74_ + new_n73_*new_n72_;
-poly f58 = -new_n75_ + 1 - new_n74_;
-poly f59 = -new_n76_ + new_n75_*new_n71_;
-poly f60 = -new_n77_ + new_n76_*new_n54_;
-poly f61 = -new_n78_ + 1 - new_n77_;
-poly f62 = -new_n79_ + new_n68_ + new_n73_ - 2*new_n68_*new_n73_;
-poly f63 = -new_n80_ + new_n53_*new_n79_;
-poly f64 = -new_n81_ + 1 - new_n80_;
-poly f65 = -new_n82_ + new_n81_*new_n78_;
-poly f66 = -new_n83_ + a1*b3;
-poly f67 = -new_n84_ + new_n83_*new_n82_;
-poly f68 = -new_n85_ + 1 - new_n84_;
-poly f69 = -new_n86_ + new_n76_ + new_n53_ - 2*new_n76_*new_n53_;
-poly f70 = -new_n87_ + 1 - new_n83_;
-poly f71 = -new_n88_ + new_n87_*new_n86_;
-poly f72 = -new_n89_ + 1 - new_n88_;
-poly f73 = -new_n90_ + new_n89_*new_n85_;
-poly f74 = -m4 + new_n90_ + new_n50_ - 2*new_n90_*new_n50_;
-poly f75 = -new_n92_ + new_n50_*new_n90_;
-poly f76 = -new_n93_ + 1 - new_n92_;
-poly f77 = -new_n94_ + new_n85_*new_n93_;
-poly f78 = -new_n95_ + 1 - new_n94_;
-poly f79 = -new_n96_ + new_n71_*new_n78_;
-poly f80 = -new_n97_ + a3*b2;
-poly f81 = -new_n98_ + new_n63_ + new_n97_ - 2*new_n63_*new_n97_;
-poly f82 = -new_n99_ + 1 - new_n98_;
-poly f83 = -new_n100_ + new_n96_ + new_n99_ - 2*new_n96_*new_n99_;
-poly f84 = -new_n101_ + a2*b3;
-poly f85 = -new_n102_ + new_n101_*new_n100_;
-poly f86 = -new_n103_ + 1 - new_n102_;
-poly f87 = -new_n104_ + new_n96_ + new_n98_ - 2*new_n96_*new_n98_;
-poly f88 = -new_n105_ + 1 - new_n101_;
-poly f89 = -new_n106_ + new_n105_*new_n104_;
-poly f90 = -new_n107_ + 1 - new_n106_;
-poly f91 = -new_n108_ + new_n103_*new_n107_;
-poly f92 = -m5 + new_n95_ + new_n108_ - 2*new_n95_*new_n108_;
-poly f93 = -new_n110_ + new_n108_*new_n95_;
-poly f94 = -new_n111_ + 1 - new_n110_;
-poly f95 = -new_n112_ + new_n103_*new_n111_;
-poly f96 = -new_n113_ + new_n97_*new_n63_;
-poly f97 = -new_n114_ + 1 - new_n113_;
-poly f98 = -new_n115_ + 1 - new_n96_;
-poly f99 = -new_n116_ + new_n98_*new_n115_;
-poly f100 = -new_n117_ + 1 - new_n116_;
-poly f101 = -new_n118_ + new_n114_*new_n117_;
-poly f102 = -new_n119_ + 1 - new_n118_;
-poly f103 = -new_n120_ + a3*b3;
-poly f104 = -new_n121_ + new_n119_ + new_n120_ - 2*new_n119_*new_n120_;
-poly f105 = -new_n122_ + 1 - new_n121_;
-poly f106 = -m6 + new_n112_ + new_n122_ - 2*new_n112_*new_n122_;
-poly f107 = -new_n124_ + new_n120_*new_n119_;
-poly f108 = -new_n125_ + 1 - new_n124_;
-poly f109 = -new_n126_ + 1 - new_n112_;
-poly f110 = -new_n127_ + new_n121_*new_n126_;
-poly f111 = -new_n128_ + 1 - new_n127_;
-poly f112 = -new_n129_ + new_n125_*new_n128_;
-poly f113 = -m7 + 1 - new_n129_;
-ideal G = f0, f3, f10, f32, f74, f92, f106, f113, f112, f111, f110, f109, f95, f94, f93, f78, f105, f108, f77, f104, f107, f76, f102, f75, f91, f101, f73, f86, f90, f100, f68, f85, f89, f99, f67, f83, f87, f98, f65, f72, f79, f61, f71, f60, f69, f59, f64, f54, f63, f53, f62, f37, f51, f82, f97, f36, f47, f58, f81, f96, f33, f35, f46, f50, f57, f30, f34, f44, f49, f55, f29, f43, f24, f28, f42, f23, f27, f41, f21, f25, f40, f16, f11, f15, f8, f13, f14, f20, f39, f4, f7, f12, f19, f26, f38, f48, f56, f70, f88, f1, f2, f5, f6, f9, f17, f18, f22, f31, f45, f52, f66, f80, f84, f103;
-//Define the primary ideal
-
-ideal primary = m0, m1, m2, m3, m4, m5, m6, m7, a0, a1, a2, a3, b0, b1, b2, b3;
-
-ideal terms = new_n18_, new_n19_, new_n21_, new_n22_, new_n23_, new_n24_, new_n25_, new_n26_, new_n28_, new_n29_, new_n30_, new_n31_, new_n32_, new_n33_, new_n34_, new_n35_, new_n36_, new_n37_, new_n38_, new_n39_, new_n40_, new_n41_, new_n42_, new_n43_, new_n44_, new_n45_, new_n46_, new_n47_, new_n48_, new_n50_, new_n51_, new_n52_, new_n53_, new_n54_, new_n55_, new_n56_, new_n57_, new_n58_, new_n59_, new_n60_, new_n61_, new_n62_, new_n63_, new_n64_, new_n65_, new_n66_, new_n67_, new_n68_, new_n69_, new_n70_, new_n71_, new_n72_, new_n73_, new_n74_, new_n75_, new_n76_, new_n77_, new_n78_, new_n79_, new_n80_, new_n81_, new_n82_, new_n83_, new_n84_, new_n85_, new_n86_, new_n87_, new_n88_, new_n89_, new_n90_, new_n92_, new_n93_, new_n94_, new_n95_, new_n96_, new_n97_, new_n98_, new_n99_, new_n100_, new_n101_, new_n102_, new_n103_, new_n104_, new_n105_, new_n106_, new_n107_, new_n108_, new_n110_, new_n111_, new_n112_, new_n113_, new_n114_, new_n115_, new_n116_, new_n117_, new_n118_, new_n119_, new_n120_, new_n121_, new_n122_, new_n124_, new_n125_, new_n126_, new_n127_, new_n128_, new_n129_;
 
 ///////////////////
 //// FUNCTIONS ////
@@ -316,7 +181,7 @@ proc VARS_NOT_IN_V (poly r, ideal V)
 {
     int size_r = size(variables(r));
     int size_V = size(V);
-    int logic = 0; 
+    int logic = 0;
     for (int i = 1; i <= size_r; i = i + 1)
     {
         for (int j = 1; j <= size_V; j = j + 1)
@@ -413,17 +278,18 @@ proc POWER_REDUCE (poly r)
         }
         r_reduced = r_reduced + monomials[i];
     }
-    return(r_reduced);       
+    return(r_reduced);
 }
 
 // Repeats Spoly until vt is removed from r
+// Note, this is not used in the code, but was used in the past
 proc SPOLY_REPEAT (poly vt, poly r, poly gt)
 {
     int INV_check = INV_CHECK(gt);
     if (INV_check)
     {
         gt = gt -  1;
-    } 
+    }
     ideal monomials;
     poly lv;
     number lc;
@@ -579,48 +445,47 @@ proc GB_REW (ideal G, ideal primary)
     int size_G = ncols(G);
     for (int i = size_G; i >= 1; i = i - 1)
     {
-        int INV_check = INV_CHECK(G[i]);
-        if (INV_check)
-        {
-            G[i] = G[i] - 1;
-        }
         poly lv = leadmonom(G[i]);
-        lv;
         number lc = leadcoef(G[i]);
-        lc;
         poly r = G[i] - lc*lv;
-        r;
-        VARS_NOT_IN_V(r, V);
         while (VARS_NOT_IN_V(r, V))
         {
             poly vt = CHOOSE_VT(r, V);
-            vt;
             poly gt = CHOOSE_GT(vt, G);
-            gt;
             r = spoly(r, gt);
-            r;
             r = POWER_REDUCE(r);
-            r;
             r = XOR_AND_RULE(r, G);
-            r;
             if (VARS_NOT_IN_V(r, V))
             {
                 break;
             }
-            else
-            {
-                continue;
-            }
         }
         G[i] = r + lc*lv;
-        if (INV_check)
-        {
-            G[i] = G[i] + 1;
-        }
     }
-    return(G);
-    // need update model still
+    ideal Gn;
+    int size_V = ncols(V);
+    for(int i = 1; i <= size_G; i = i + 1)
+    {
+      for(int j = 1; j < size_V; j = j + 1)
+      {
+        if(variables(G[i])[1] == V[j])
+        {
+          Gn = Gn + G[i];
+          break;
+        }
+      }
+    }
+    return(Gn);
 }
 
-G;
-GB_REW(G, primary);
+ideal Gn = GB_REW(G, primary);
+Gn;
+if(reduce(fspec, Gn + J0) == 0)
+{
+  printf("The spec is a member of the GB");
+}
+else
+{
+  printf("The spec is invalid");
+}
+quit;
