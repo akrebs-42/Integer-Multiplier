@@ -1,4 +1,5 @@
 import sys
+import os
 
 #These variables are global for parsing and identifying the circuit model
 models = {}
@@ -240,16 +241,16 @@ def write_singular(model, write_file):
         #Write the vanishing polynomials of the inputs
         #This part is not necessary with how the Singular file currently
         #handles the Grobner basis, may be useful in the future
-        #f.write('\n//Define the input vanishing polys\n\n')
-        #vanish_start_ind = ind
-        #for input in model['inputs']:
-        #    vanishing_poly = get_vanishing_poly(input)
-        #    f.write('poly f' + str(ind) + ' = ' + vanishing_poly + ';\n')
-        #    ind += 1
-        #J0_str = 'ideal J0 = f' + str(vanish_start_ind)
-        #for i in range(vanish_start_ind + 1, ind):
-        #    J0_str += ', f' + str(i)
-        #f.write(J0_str + ';\n')
+        f.write('\n//Define the input vanishing polys\n\n')
+        vanish_start_ind = ind
+        for input in model['inputs']:
+            vanishing_poly = get_vanishing_poly(input)
+            f.write('poly f' + str(ind) + ' = ' + vanishing_poly + ';\n')
+            ind += 1
+        J0_str = 'ideal J0 = f' + str(vanish_start_ind)
+        for i in range(vanish_start_ind + 1, ind):
+            J0_str += ', f' + str(i)
+        f.write(J0_str + ';\n')
 
         #Write the primary inputs and outputs as an ideal of their own
         primary = 'ideal primary = ';
@@ -268,20 +269,23 @@ def write_singular(model, write_file):
         nets = get_intermediate_nets(model)
         f.write('\n' + nets + '\n')
 
+
 #This is the main set_function
 #Check that a file was given to write to
-if(len(sys.argv) < 2):
-    print('Error, needs the filename to parse')
+if(len(sys.argv) < 3):
+    print('Error, needs the filename to parse and the Singular script to append at the end in that order')
     exit(1)
 read_file = sys.argv[1]
+sing_file = sys.argv[2]
 
 #Desginate the write file, if none is provided call it write.sing
 write_file = ''
-if(len(sys.argv) < 3):
+if(len(sys.argv) < 4):
     print('Using default write file name')
     write_file = 'write.sing'
 else:
-    write_file = sys.argv[2]
+    write_file = sys.argv[3]
+
 
 
 #Read from the input file
@@ -303,3 +307,6 @@ with open(read_file, 'r') as f:
 #the one that should be written
 write_singular(models[currentModel], write_file)
 print('Circuit model written to file: ' + write_file)
+
+os.system('cat ' + sing_file + ' >> ' + write_file)
+print('Appended singular file: ' + sing_file)
